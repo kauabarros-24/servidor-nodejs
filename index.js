@@ -14,6 +14,10 @@ app.post('/person', async (req, res) => {
     const { name, salary, approved } = req.body
     const person = { name, salary, approved }
     
+    if (!name) {
+        res.status(422).json({error: "O nome é obrigatório"})
+    }
+
     // Criar novo documento no MongoDB
     try {
         await Person.create(person)
