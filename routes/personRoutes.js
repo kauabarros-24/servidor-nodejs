@@ -1,10 +1,14 @@
-app.post('/person', async (req, res) => {
+const router = require('express').Router()
+const Person = require('../models/Person')
+
+// Rota para criar uma nova pessoa
+router.post('/', async (req, res) => {
     // Extrair dados do corpo da requisição
     const { name, salary, approved } = req.body
     const person = { name, salary, approved }
     
     if (!name) {
-        res.status(422).json({error: "O nome é obrigatório"})
+        return res.status(422).json({ error: "O nome é obrigatório" })
     }
 
     // Criar novo documento no MongoDB
@@ -15,3 +19,5 @@ app.post('/person', async (req, res) => {
         res.status(500).json({ error: error.message })
     }
 })
+
+module.exports = router
