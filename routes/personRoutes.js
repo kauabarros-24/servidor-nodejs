@@ -32,6 +32,18 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+    //Extrair o dado da requisição
 
+    const id = req.params.id;
+    try {
+        const person = await Person.findOne({_id: id})
+
+        res.status(201).json(person)
+    } catch (error) {
+        res.status(500).json({error: error})
+    }
+
+})
 
 module.exports = router
