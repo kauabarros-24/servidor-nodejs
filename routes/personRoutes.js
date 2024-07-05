@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const { application } = require('express')
 const Person = require('../models/Person')
 
 // Rota para criar uma nova pessoa
@@ -39,11 +40,35 @@ router.get('/:id', async (req, res) => {
     try {
         const person = await Person.findOne({_id: id})
 
+        if (!person) {
+            res.status(422).json({message: "O usuário não foi encontrado"})
+        }
+
         res.status(201).json(person)
     } catch (error) {
         res.status(500).json({error: error})
     }
 
+})
+
+
+//Atualização de dados
+router.patch("/:id",  async (req, res) => {
+    const id = req.params.id;
+
+    const {name, salary, approved} = req.body
+
+    const person = {
+        name, salary, approved
+    }
+
+    try {
+        const updatePerson = await Person.updateOne({_id: id}, person)
+        
+        res.status(200).json(person)
+    } catch (error) {
+        res.status(500).json({error: error})
+    }
 })
 
 module.exports = router
