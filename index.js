@@ -2,7 +2,6 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 
-const Person = require('./models/Person')
 const personRoutes = require('./routes/personRoutes')
 
 // Middleware para analisar o corpo da requisição
